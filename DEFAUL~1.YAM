@@ -1,0 +1,51 @@
+# Default configuration for badminton-shot-tracker.
+#
+# Pixel coordinates of the four court corners as seen in the input video.
+# Order: top-left, top-right, bottom-right, bottom-left.
+# These are placeholders — replace with values measured from your own footage
+# (e.g., by clicking the corners in a single frame).
+court_corners:
+  top_left:     [320, 180]
+  top_right:    [960, 180]
+  bottom_right: [1180, 660]
+  bottom_left:  [100, 660]
+
+# Real-world court dimensions in metres (doubles court, official BWF size).
+court_size_m:
+  length: 13.4
+  width: 6.1
+
+# HSV thresholds for the shuttle. A white/yellow shuttle on a darker court
+# is the typical assumption; tune for your lighting.
+shuttle_hsv:
+  lower: [0, 0, 200]
+  upper: [180, 60, 255]
+
+# Minimum / maximum contour area (px^2) for the shuttle blob.
+shuttle_area:
+  min: 4
+  max: 400
+
+# Video / detection parameters.
+fps: 30
+detection:
+  # Sharp direction change threshold: cosine of angle between consecutive
+  # velocity vectors. Below this value (i.e. angle > ~120 deg) counts as a
+  # likely shot contact.
+  direction_cos_threshold: -0.3
+  # Minimum speed (px / frame) required to consider the trajectory valid.
+  min_speed_px: 2.0
+  # Minimum frames between two consecutive detected contacts.
+  refractory_frames: 6
+
+# Heatmap rendering.
+heatmap:
+  grid_x: 61          # 10 cm per cell on the long axis (6.1 m wide is 61)
+  grid_y: 134         # 10 cm per cell on the short axis
+  gaussian_sigma: 2.0
+
+# Output video options.
+output:
+  draw_skeleton: true
+  draw_trail: true
+  trail_length: 20
